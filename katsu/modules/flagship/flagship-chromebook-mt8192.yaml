@@ -1,0 +1,29 @@
+builder: dnf
+
+import:
+  - ../chromebook/base-cbe-mt8192.yaml
+  - ../chromebook/live-cbe-mt8192.yaml
+
+distro: Ultramarine CBE Flagship 39
+
+out_file: ultramarine-cbe-flagship-39-live.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 39
+  # options:
+  #   - --setopt=strict=0
+  exclude:
+    - budgie-desktop-defaults
+    - budgie-backgrounds
+  packages:
+    - "@ultramarine-flagship-product-environment"
+
+#scripts:
+#  post:
+#    - id: flagship-live
+#      name: Set up Flagship Live
+#      file: ./flagship-live.sh

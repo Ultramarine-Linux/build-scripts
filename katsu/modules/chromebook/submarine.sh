@@ -11,7 +11,14 @@ umount $blpart
 sed -i '/mnt/d' /etc/fstab
 
 # Flash bootloader
-# dd if=/path/to/submarine.kpart of=$blpart
+submarine="/usr/share/submarine/submarine"
+if [ $(uname -m ) == 'x86_64' ]; then
+    submarine="$submarine-x86.kpart"
+elif [ $(uname -m ) == 'aarch64' ]; then
+    submarine="$submarine-a64.kpart"
+fi
+
+dd if=$submarine of=$blpart
 cgpt add -i $partnum -t kernel -P 15 -T 1 -S 1 /dev/$rootdev
 
 # Workaround for katsu trying to unmount /mnt

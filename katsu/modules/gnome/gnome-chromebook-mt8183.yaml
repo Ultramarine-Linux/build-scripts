@@ -1,0 +1,33 @@
+builder: dnf
+
+import:
+  - ../chromebook/base-cbe-mt8183.yaml
+  - ../chromebook/live-cbe-mt8183.yaml
+
+out_file: ultramarine-cbe-gnome-39-live.iso
+
+#  scripts:
+#  post:
+#    - id: gnome-live
+#      name: Set up GNOME Live
+#      file: gnome-live.sh
+
+distro: Ultramarine CBE GNOME 39
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 39
+  # options:
+  #   - --setopt=strict=0
+  packages:
+    - "@ultramarine-gnome-product-environment"
+    - ultramarine-release-gnome
+    - ultramarine-release-identity-gnome
+# scripts:
+#   post:
+#     - id: flagship-live
+#       name: Set up Flagship Live
+#       file: ./flagship-live.sh

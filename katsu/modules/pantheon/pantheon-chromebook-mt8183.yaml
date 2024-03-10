@@ -1,0 +1,55 @@
+builder: dnf
+
+import:
+  - ../chromebook/base-cbe-mt8183.yaml
+  - ../chromebook/live-cbe-mt8183.yaml
+
+out_file: ultramarine-cbe-pantheon-39-live.iso
+
+#  scripts:
+#  post:
+#    - id: pantheon-live
+#      name: Set up Pantheon Live
+#      file: ./pantheon-live.sh
+
+distro: Ultramarine CBE Pantheon 39
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 39
+  options:
+    - --setopt=strict=1
+  exclude:
+    - gnome-tour
+    - gnome-shell
+    - setroubleshoot
+  arch_exclude:
+    x86_64:
+      - elementary-calculator
+      - elementary-calendar
+      - elementary-capnet-assist
+      - elementary-camera
+      - elementary-mail
+      - elementary-music
+      - elementary-videos
+      - evince # yes, this application is shipped in appcenter
+  packages:
+    - "@ultramarine-pantheon-product-environment"
+    - elementary-greeter
+    - lightdm
+    - seahorse
+    - appcenter
+    - xdg-user-dirs-gtk
+    - xdg-desktop-portal-gtk
+    - xdg-desktop-portal-xapp
+    - ultramarine-backgrounds-gnome
+    - rsms-inter-fonts
+    - ultramarine-repos-appcenter
+# scripts:
+#   post:
+#     - id: flagship-live
+#       name: Set up Flagship Live
+#       file: ./flagship-live.sh

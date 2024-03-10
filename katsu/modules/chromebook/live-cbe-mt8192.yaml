@@ -17,7 +17,7 @@ disk:
   size: 14GiB
   partitions:
     - label: submarine
-      size: 16MiB
+      size: 64MiB
       filesystem: efi
       mountpoint: /mnt
 
@@ -68,5 +68,5 @@ dnf:
     - vim
     - nano
     # for drivers and other stuff
-    - kernel
-    - kernel-devel-matched
+    - kernel-mt8192
+    - kernel-mt8192-devel

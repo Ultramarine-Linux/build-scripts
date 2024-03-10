@@ -1,0 +1,25 @@
+builder: dnf
+
+import:
+  - ../chromebook/base-cbe-mt8192.yaml
+  - ../chromebook/live-cbe-mt8192.yaml
+
+distro: Ultramarine CBE KDE 39
+
+out_file: ultramarine-cbe-kde-39.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 39
+  # options:
+  #   - --setopt=strict=0
+  packages:
+    - "@ultramarine-kde-product-environment"
+# scripts:
+#   post:
+#     - id: flagship-live
+#       name: Set up Flagship Live
+#       file: ./flagship-live.sh
