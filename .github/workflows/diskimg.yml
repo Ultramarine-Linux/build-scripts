@@ -1,0 +1,102 @@
+name: Build Disk Images
+on:
+  workflow_call:
+    inputs:
+      # Format: <path/to/manifest>
+      # Omit file architecure and file extension
+      # example: base/base-disk
+      manifest_path:
+        required: true
+        type: string
+      # User-friendly name of the image variant
+      # example: base
+      edition:
+        required: true
+        type: string
+
+env:
+  KATSU_BUILD_TASK_NAME: "Build image"
+  DNF_PKGS: |
+    git
+    xorriso
+    rpm
+    limine
+    systemd
+    btrfs-progs
+    e2fsprogs
+    xfsprogs
+    dosfstools
+    grub2
+    parted
+    util-linux-core
+    systemd-container
+    grub2-efi
+    uboot-images-armv8
+    uboot-tools
+    qemu-user-static-aarch64
+    qemu-user-binfmt
+    qemu-kvm
+    qemu-img
+    cargo
+    mkpasswd
+    moby-engine
+    squashfs-tools
+    erofs-utils
+    grub2-tools
+    grub2-tools-extra
+    isomd5sum
+    moby-engine
+    podman
+    buildah
+    katsu
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86_64
+          - aarch64
+    runs-on: ${{ matrix.arch == 'x86_64' && 'ubuntu-latest' || 'arm64' }}
+    container:
+      image: ghcr.io/terrapkg/builder:f40
+      options: --privileged -v /dev:/dev
+
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y $DNF_PKGS
+          dnf clean all
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set output artifact name
+        run: |
+          PREFIX="ultramarine-linux-${{ matrix.arch }}"
+          name=$(echo $PREFIX-${{ inputs.edition }} | sed 's/\//-/g')
+          echo artifact=$name >> $GITHUB_ENV
+
+      - name: Build image
+        run: |
+          set -euxo pipefail
+          chcon system_u:object_r:install_exec_t:s0 "$(which katsu)"
+          # Resolve path to manifest
+          manifest_path="katsu/modules/${{ inputs.manifest_path }}-${{ matrix.arch }}.yaml"
+          echo "Using manifest: $manifest_path"
+          export KATSU_LOG=trace
+          katsu -v --output=disk-image $manifest_path
+
+      - name: Label and compress image
+        run: |
+          set -euxo pipefail
+          mv katsu-work/image/katsu.img katsu-work/image/${{ env.artifact }}.img
+
+          # Compress image as zst, output as .img.zst
+          zstd -T0 -19 katsu-work/image/${{ env.artifact }}.img -o katsu-work/image/${{ env.artifact }}.img.zst
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.artifact }}-image
+          path: katsu-work/image/*.img.zst

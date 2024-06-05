@@ -212,7 +212,7 @@ jobs:
 
       - name: Generate artifact tree
         run: |
-          set
+          set -euxo pipefail
           ls -lR
           mkdir -p images
 
