@@ -45,6 +45,11 @@ dnf:
       - grub2-pc-modules
       - shim-x64
       - shim-unsigned-x64
+  packages:
+    - rpmfusion-free-release
+    - rpmfusion-nonfree-release
+    - rpmfusion-nonfree-release-tainted
+    - rpmfusion-free-release-tainted
 #   packages:
 #     - filesystem
 #     - setup

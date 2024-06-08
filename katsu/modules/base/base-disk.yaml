@@ -41,6 +41,7 @@ dnf:
     - libgomp
     - fedora-repos
     - efibootmgr
+    - appimagelauncher
     - ultramarine-raw-filesystem
     - plymouth
     - plymouth-system-theme
