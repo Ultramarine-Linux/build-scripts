@@ -1,0 +1,17 @@
+builder: dnf
+
+import:
+  - stoney.yaml
+  - ../../../xfce/xfce.yaml
+  - ../../../xfce/base-disk-aarch64.yaml
+
+distro: Ultramarine Linux 40 Xfce (Stoney Chromebook)
+
+out_file: ultramarine-cbe-stoney-xfce-40.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 40

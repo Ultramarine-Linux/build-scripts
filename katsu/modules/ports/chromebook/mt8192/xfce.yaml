@@ -1,0 +1,17 @@
+builder: dnf
+
+import:
+  - mt8192.yaml
+  - ../../../xfce/xfce.yaml
+  - ../../../xfce/base-disk-aarch64.yaml
+
+distro: Ultramarine Linux 40 Xfce (mt8192 Chromebook)
+
+out_file: ultramarine-cbe-mt8192-xfce-40.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 40

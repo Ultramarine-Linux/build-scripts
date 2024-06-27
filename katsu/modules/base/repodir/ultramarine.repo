@@ -9,3 +9,16 @@ gpgkey=https://repos.fyralabs.com/um$releasever/key.asc
 repo_gpgcheck=1
 enabled=1
 enabled_metadata=1
+
+[kaibutsu]
+name=Kaibutsu Device Kernels
+baseurl=https://repos.fyralabs.com/kaibutsu
+metadata_expire=6h
+type=rpm
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://repos.fyralabs.com/kaibutsu/key.asc
+repo_gpgcheck=1
+enabled=1
+enabled_metadata=1
+priority=1

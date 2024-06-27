@@ -1,0 +1,17 @@
+builder: dnf
+
+import:
+  - mt8183.yaml
+  - ../../../kde/kde.yaml
+  - ../../../kde/base-disk-aarch64.yaml
+
+distro: Ultramarine Linux 40 KDE (mt8183 Chromebook)
+
+out_file: ultramarine-cbe-mt8183-kde-40.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 40

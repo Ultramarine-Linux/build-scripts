@@ -1,0 +1,25 @@
+builder: dnf
+
+scripts:
+  post:
+    - id: cleanup
+      name: Clean up system
+      file: ../base/cleanup.sh
+    - id: selinux-setup
+      name: Set up SELinux
+      file: ../base/selinux.sh
+      chroot: false
+    - id: buildstamp
+      name: Generate buildstamp
+      file: ../base/buildstamp.sh
+    - id: submarine
+      name: Set up ChromeOS bootloader
+      file: submarine.sh
+
+dnf:
+  releasever: 40
+  packages:
+    - cros-keyboard-map
+    - depthcharge-tools
+    - vboot-utils
+    - submarine

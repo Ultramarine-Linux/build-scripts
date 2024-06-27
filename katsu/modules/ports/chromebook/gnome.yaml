@@ -1,0 +1,17 @@
+builder: dnf
+
+import:
+  - chromebook.yaml
+  - ../../gnome/gnome.yaml
+  - ../../gnome/base-disk-x86_64.yaml
+
+distro: Ultramarine Linux 40 GNOME (Chromebook Edition)
+
+out_file: ultramarine-cbe-gnome-40.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 40

@@ -1,0 +1,17 @@
+builder: dnf
+
+import:
+  - stoney.yaml
+  - ../../../flagship/flagship.yaml
+  - ../../../flagship/base-disk-aarch64.yaml
+
+distro: Ultramarine Linux 40 Flagship (Stoney Chromebook)
+
+out_file: ultramarine-cbe-stoney-flagship-40.img
+
+bootloader: grub
+
+kernel_cmdline: "quiet rhgb"
+
+dnf:
+  releasever: 40

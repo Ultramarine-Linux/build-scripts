@@ -1,0 +1,10 @@
+builder: dnf
+
+import:
+  - ../chromebook.yaml
+
+dnf:
+  releasever: 40
+  packages:
+    - kernel-mt8192
+    - kernel-mt8192-devel
